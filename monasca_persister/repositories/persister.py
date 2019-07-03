@@ -18,7 +18,7 @@ import os
 from oslo_config import cfg
 from oslo_log import log
 
-from monasca_common.kafka import consumer
+from monasca_common.confluent_kafka import consumer
 
 LOG = log.getLogger(__name__)
 
@@ -36,7 +36,6 @@ class Persister(object):
         self._consumer = consumer.KafkaConsumer(
             kafka_conf.uri,
             zookeeper_conf.uri,
-            kafka_conf.zookeeper_path,
             kafka_conf.group_id,
             kafka_conf.topic,
             repartition_callback=self._flush,
