@@ -58,5 +58,8 @@ COPY monasca-persister.conf.j2 persister-logging.conf.j2 /etc/monasca/
 # Expose port for specific service.
 #EXPOSE 1234
 
+RUN apk add --no-cache \
+        librdkafka-dev
+
 # Implement start script in `start.sh` file.
 CMD ["/start.sh"]
