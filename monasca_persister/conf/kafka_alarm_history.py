@@ -27,7 +27,7 @@ kafka_alarm_history_group = cfg.OptGroup(name='kafka_alarm_history',
 kafka_alarm_history_opts = [
     cfg.BoolOpt('enabled',
                 help='Enable alarm state history persister',
-                default=True),
+                default=False),
     # NOTE(czarneckia) default by reference does not work with ListOpt
     cfg.ListOpt('uri',
                 help='Comma separated list of Kafka broker host:port',

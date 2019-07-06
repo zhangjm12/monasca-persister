@@ -18,7 +18,7 @@ import os
 from oslo_config import cfg
 from oslo_log import log
 
-from monasca_common.kafka import consumer
+from monasca_common.confluent_kafka import consumer
 
 LOG = log.getLogger(__name__)
 
@@ -34,14 +34,14 @@ class Persister(object):
         self._batch_size = kafka_conf.batch_size
 
         self._consumer = consumer.KafkaConsumer(
-            kafka_conf.uri,
-            zookeeper_conf.uri,
-            kafka_conf.zookeeper_path,
+            kafka_conf.uri[0],
+            # zookeeper_conf.uri,
+            # kafka_conf.zookeeper_path,
             kafka_conf.group_id,
             kafka_conf.topic,
             repartition_callback=self._flush,
             commit_callback=self._flush,
-            commit_timeout=kafka_conf.max_wait_time_seconds)
+            max_commit_interval=kafka_conf.max_wait_time_seconds)
 
         self.repository = repository()
 
@@ -78,7 +78,7 @@ class Persister(object):
         try:
             for raw_message in self._consumer:
                 try:
-                    message = raw_message[1]
+                    message = raw_message.value()
                     data_point = self.repository.process_message(message)
                     self._data_points.append(data_point)
                 except Exception:
