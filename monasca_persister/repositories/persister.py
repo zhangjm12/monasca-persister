@@ -35,12 +35,12 @@ class Persister(object):
 
         self._consumer = consumer.KafkaConsumer(
             kafka_conf.uri,
-            zookeeper_conf.uri,
+            # zookeeper_conf.uri,
             kafka_conf.group_id,
             kafka_conf.topic,
             repartition_callback=self._flush,
             commit_callback=self._flush,
-            commit_timeout=kafka_conf.max_wait_time_seconds)
+            max_commit_interval=kafka_conf.max_wait_time_seconds)
 
         self.repository = repository()
 
