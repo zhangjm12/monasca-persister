@@ -12,6 +12,11 @@ ARG EXTRA_DEPS="influxdb"
 ARG BASE_TAG=master
 FROM monasca/base:$BASE_TAG
 
+RUN apk add --no-cache \
+                libressl2.7-libcrypto \
+                librdkafka-dev \
+                libressl2.7-libssl
+
 # Environment variables used for our service or wait scripts.
 ENV \
     DEBUG=false \
