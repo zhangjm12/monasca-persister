@@ -75,9 +75,11 @@ class Persister(object):
 
     def run(self):
         try:
+            LOG.info("Start running...")
             for raw_message in self._consumer:
                 try:
                     message = raw_message[1]
+                    LOG.info("Message: {}".format(message))
                     data_point = self.repository.process_message(message)
                     self._data_points.append(data_point)
                 except Exception:
