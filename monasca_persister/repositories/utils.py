@@ -17,7 +17,7 @@ import ujson as json
 
 
 def parse_measurement_message(message):
-    decoded_message = json.loads(message.message.value)
+    decoded_message = json.loads(message)
 
     metric = decoded_message['metric']
 
