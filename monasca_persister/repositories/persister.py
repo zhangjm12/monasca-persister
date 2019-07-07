@@ -39,11 +39,15 @@ class Persister(object):
             # kafka_conf.zookeeper_path,
             kafka_conf.group_id,
             kafka_conf.topic,
-            repartition_callback=self._flush,
+            repartition_callback=self._flush_on_revoke,
             commit_callback=self._flush,
             max_commit_interval=kafka_conf.max_wait_time_seconds)
 
         self.repository = repository()
+
+    def _flush_on_revoke(self, consumer, partitions):
+        LOG.info("{} revoke partitions: {}", consumer, partitions)
+        self._flush()
 
     def _flush(self):
         if not self._data_points:
