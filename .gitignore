@@ -20,3 +20,4 @@ perf/jmeter.log
 AUTHORS
 ChangeLog
 dist/*
+venv
