@@ -45,8 +45,8 @@ class Persister(object):
 
         self.repository = repository()
 
-    def _flush_on_revoke(self, consumer, partitions):
-        LOG.info("{} revoke partitions: {}", consumer, partitions)
+    def _flush_on_revoke(self, revoke_consumer, revoke_partitions):
+        LOG.info("Rebalancing partitions...")
         self._flush()
 
     def _flush(self):
