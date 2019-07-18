@@ -31,7 +31,8 @@ class AbstractInfluxdbRepository(abstract_repository.AbstractRepository):
             self.conf.influxdb.port,
             self.conf.influxdb.user,
             self.conf.influxdb.password,
-            self.conf.influxdb.database_name)
+            self.conf.influxdb.database_name,
+            timeout=30)
 
     def write_batch(self, data_points):
         self._influxdb_client.write_points(data_points, 'ms', protocol='line')
